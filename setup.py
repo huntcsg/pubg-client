@@ -42,7 +42,7 @@ dev_requires = testing_requires + docs_require + [
 
 setup(
     name='pubg-client',
-    version='0.1.3',
+    version='0.1.4',
     description='A python client for the PlayerUnknowns Battlegrounds API',
     long_description="\n".join([README, CHANGES, AUTHORS]),
     author='Hunter Senft-Grupp',
