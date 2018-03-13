@@ -1,0 +1,93 @@
+#!/bin/bash
+
+function print_help () {
+    echo "usage: manage CMD [ options ]"
+    echo ""
+    echo "Includes the source code and all the necessary tools to build and upload pubg-client to pypi"
+    echo ""
+    echo "      lint        Run the linters"
+    echo "      clean       Runs linters but fixes imports"
+    echo "      test        Runs the test suite"
+    echo "      docs        Builds the documentation"
+    echo "      build       Builds the python package"
+    echo "      release     Releases the python package"
+    echo "      help        prints this help message"
+    echo "      bump        Uses bump version to do the appropriate thing"
+}
+
+case $1 in
+
+    "lint" )
+    shift
+    isort -rc src/pubg_client
+    flake8 src/pubg_client
+    exit $?
+    ;;
+
+    "clean" )
+    shift
+    isort -rc -y src/pubg_client && \
+    flake8 src/pubg_client
+    exit $?
+    ;;
+
+    "test" )
+    shift
+    pip install .[testing]
+    py.test --html=cover/unit/report.html --self-contained-html --cov pubg_client tests/unit "$@"
+    coverage html -d cover/unit
+    exit $?
+    ;;
+
+    "test-regression" )
+    shift
+    pip install .[testing]
+    py.test --html=cover/regression/report.html --self-contained-html tests/regression "$@"
+    coverage html -d cover/regression
+    exit $?
+    ;;
+
+    "test-integration" )
+    shift
+    pip install .[testing]
+    py.test --html=cover/integration/report.html --self-contained-html tests/integration "$@"
+    coverage html -d cover/integration
+    exit $?
+    ;;
+
+    "docs" )
+    shift
+    pip install .[docs]
+    sphinx-build -c docs/source -W -a -E docs/source docs/build "$@"
+    exit $?;
+    ;;
+
+    "bump" )
+    shift
+    bumpversion "$@"
+    ;;
+
+    "build" )
+    shift
+    python setup.py sdist bdist_wheel
+    exit $?;
+    ;;
+
+    "release" )
+    shift
+    ./bin/release "$@"
+    exit $?
+    ;;
+
+    "help" )
+    shift
+    print_help
+    exit
+    ;;
+
+    * )
+    print_help
+    exit
+    ;;
+
+esac

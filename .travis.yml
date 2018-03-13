@@ -1,0 +1,17 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - ./utils/docker-build
+
+script:
+  - ./utils/manage lint
+  - ./utils/manage test
+  - ./utils/manage regression
+  - ./utils/manage docs
+  - ./utils/manage build
+
+after_success:
+  - ./utils/travis/after_success

@@ -1,0 +1,12 @@
+__pycache__
+.cache
+.idea
+cover
+*.egg-info
+.coverage
+docs/build
+dist/
+build/
+id_rsa
+id_rsa.pub
+.pytest_cache

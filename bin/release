@@ -1,0 +1,39 @@
+#!/bin/bash -u
+
+case $1 in
+
+    "prepare" )
+    shift
+    git fetch origin v0:v0
+    git checkout v0
+    git pull
+
+    bumpversion patch
+    git push --tags https://${PUBG_CLIENT_GITHUB_TOKEN}@github.com/huntcsg/pubg-client.git
+    git push https://${PUBG_CLIENT_GITHUB_TOKEN}@github.com/huntcsg/pubg-client.git
+
+    exit $?
+    ;;
+
+    "pypi" )
+    shift
+    pip install twine && \
+    rm -rf dist && \
+    python setup.py sdist bdist_wheel && \
+    twine upload dist/*
+    exit $?
+    ;;
+
+    "update-develop" )
+    git clone https://${PUBG_CLIENT_GITHUB_TOKEN}@github.com/huntcsg/pubg-client.git __PUBG_CLIENT__
+    cd __PUBG_CLIENT__
+    git checkout v0
+    git pull
+    git checkout develop
+    git pull
+    git cherry-pick v0
+    git push https://${PUBG_CLIENT_GITHUB_TOKEN}@github.com/huntcsg/pubg-client.git
+    exit $?
+    ;;
+
+esac
