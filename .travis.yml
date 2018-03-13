@@ -9,7 +9,7 @@ before_install:
 script:
   - ./utils/manage lint
   - ./utils/manage test
-  - ./utils/manage regression
+  - ./utils/manage test-regression
   - ./utils/manage docs
   - ./utils/manage build
 
