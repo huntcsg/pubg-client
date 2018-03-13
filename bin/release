@@ -24,12 +24,12 @@ case $1 in
     exit $?
     ;;
 
-    "update-develop" )
+    "update-master" )
     git clone https://${PUBG_CLIENT_GITHUB_TOKEN}@github.com/huntcsg/pubg-client.git __PUBG_CLIENT__
     cd __PUBG_CLIENT__
     git checkout v0
     git pull
-    git checkout develop
+    git checkout master
     git pull
     git cherry-pick v0
     git push https://${PUBG_CLIENT_GITHUB_TOKEN}@github.com/huntcsg/pubg-client.git
