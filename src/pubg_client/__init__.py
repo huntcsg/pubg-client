@@ -8,7 +8,7 @@ from ._client import Client, SHARDS
 from .models._base import ModelEncoder
 from ._api import API
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 __all__ = [
     # Classes
