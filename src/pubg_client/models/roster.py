@@ -3,7 +3,7 @@ from .participant import Participant
 
 
 class Roster(Model):
-    """A roster object"""
+    """A roster object. Click 'source' to see the key map for this Model."""
 
     key_map = {
         'id': Mapping('id', str),
