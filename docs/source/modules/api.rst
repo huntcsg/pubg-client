@@ -7,4 +7,3 @@ api
         :members:
         :undoc-members:
         :member-order: bysource
-        :noindex:
